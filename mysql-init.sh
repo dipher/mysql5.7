@@ -43,7 +43,7 @@ sed -i 61,65s#mysqld_pid_file_path=#mysqld_pid_file_path=\${mysql_mdir}/data/mys
 sed -i 265,270s#datadir=\"\$datadir\"#defaults-file="\${mysql_mdir}/etc/my.cnf"# ${mysql_service}
 
 cp -f ${mysql_service} /etc/rc.d/init.d/
-cp -f ${mysql_service} /etc/rc.d/init.d/mysql.server
+cp -f ${mysql_service} ${mysql_basedir}/mysql.server
 
 echo
 echo 1 Initialize database
