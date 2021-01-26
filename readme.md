@@ -5,6 +5,7 @@ Install mysql-5.7.32-linux-glibc2.12-x86_64.tar.gz
   下载安装文件
 
 cd /opt/
+
 sh mysql-download-files.sh
 
 2 install...
@@ -18,5 +19,6 @@ sh mysql-install.sh
 
 sh mysql-init.sh
 
-4 start as service
+4 start as service 
+
 systemctl start mysql${port} 
