@@ -17,7 +17,5 @@ sh mysql-install.sh
 3 Modify the port in the file(mysql-init.sh).    
   if use multiple instances, after modifying to a different port, run the script   
 sh mysql-init.sh   
-
-4 Start as service    
-systemctl start mysql${port}    
+ 
  
