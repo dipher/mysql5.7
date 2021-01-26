@@ -38,7 +38,6 @@ fi
 
 mkdir -p ${mysql_basedir}/{etc,data,arch,log,tmp}
 cp -f my.cnf ${mysql_basedir}/etc/
-cp -f mysql-init.sh /usr/local/mysql/
 
 # create user mysql
 useradd -r -s /bin/false mysql
@@ -58,7 +57,6 @@ yum -y install libaio
 
 sed -i "s#/opt/mysql/mysql3306#${mysql_basedir}#g" ${mysql_basedir}/etc/my.cnf
 
-echo "Please read /usr/local/mysql/mysql-init.sh"
 
 
  
