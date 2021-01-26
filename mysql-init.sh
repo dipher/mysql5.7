@@ -42,7 +42,7 @@ sed -i 45,50s#datadir=#datadir=\${mysql_mdir}/data# ${mysql_service}
 sed -i 61,65s#mysqld_pid_file_path=#mysqld_pid_file_path=\${mysql_mdir}/data/mysql.pid# ${mysql_service}
 sed -i 265,270s#datadir=\"\$datadir\"#defaults-file="\${mysql_mdir}/etc/my.cnf"# ${mysql_service}
 
-cp -f ${mysql_service} /etc/rc.d/init.d/mysql${mysql_port}.service
+cp -f ${mysql_service} /etc/rc.d/init.d/mysql${mysql_port}
 cp -f ${mysql_service} ${mysql_basedir}/mysql.server
 
 echo
@@ -70,7 +70,10 @@ echo "
 
  2 modify the pwd
  set password for 'root'@'%' = password('newpwd')
-
+ 
+ 3 auto start
+ chkconfig mysql${mysql_port} on
+ service mysql${mysql_port} start
 END.
 "
  
