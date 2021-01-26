@@ -11,7 +11,7 @@ mysql_basedir=/opt/mysql/mysql3306
  
 
 if [ ! -d "/usr/local/${install_file_dir}" ]; then
-    tar -zxf ${install_file} -C /usr/local/
+    tar -zxf /tmp/${install_file} -C /usr/local/
 fi
 
 if [ ! -d "/usr/local/mysql" ]; then
