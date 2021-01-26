@@ -1,19 +1,16 @@
 #!/bin/bash
 
-# download install file to /tmp/ , such as mysql-5.7.32-linux-glibc2.12-x86_64.tar.gz and my.cnf
-download_server="http://10.32.238.30/mysql"
+# download all the nstall file to the current directory
+
 install_file=mysql-5.7.32-linux-glibc2.12-x86_64.tar.gz
 install_file_dir=`echo ${install_file} | awk -F".tar" '{print $1}'`
 mysql_basedir=/opt/mysql/mysql3306
 
 # ready for some file
  
-wget ${download_server}/cfg/my.cnf -O /tmp/my.cnf
-wget ${download_server}/cfg/mysql-init.sh -O /tmp/mysql-init.sh
 
 if [ ! -d "/usr/local/${install_file_dir}" ]; then
-    wget ${download_server}/${install_file} -O /tmp/${install_file}
-    tar -zxf /tmp/${install_file} -C /usr/local/
+    tar -zxf ${install_file} -C /usr/local/
 fi
 
 if [ ! -d "/usr/local/mysql" ]; then
@@ -39,8 +36,8 @@ if [ -d "${mysql_basedir}" ]; then
 fi
 
 mkdir -p ${mysql_basedir}/{etc,data,arch,log,tmp}
-cp -f /tmp/my.cnf  		${mysql_basedir}/etc/
-cp -f /tmp/mysql-init.sh  	/usr/local/mysql/
+cp -f my.cnf ${mysql_basedir}/etc/
+cp -f mysql-init.sh /usr/local/mysql/
 
 # create user mysql
 useradd -r -s /bin/false mysql

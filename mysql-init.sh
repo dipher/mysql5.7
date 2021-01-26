@@ -24,21 +24,22 @@ chmod -R 750 /usr/local/mysql
 chown -R mysql:mysql ${mysql_basedir}
 chmod -R 750 ${mysql_basedir}
 
-cp -rf /tmp/my.cnf  ${mysql_basedir}/etc/
+cp -rf my.cnf  ${mysql_basedir}/etc/
 
 sed -i s#/opt/mysql/mysql3306#${mysql_basedir}#g ${mysql_basedir}/etc/my.cnf
 sed -i s#3306#${mysql_port}#g ${mysql_basedir}/etc/my.cnf
 sed -i s#0.0.0.0#${mysql_ip}#g ${mysql_basedir}/etc/my.cnf
 
-cp -f ${base_dir}/support-files/mysql.server ${mysql_basedir}/mysql.server
+mysql.service=${mysql_basedir}/mysql${mysql_port}
+cp -f ${base_dir}/support-files/mysql.server ${mysql.service}
 
-cp -f ${base_dir}/support-files/mysql.server ${mysql_basedir}/mysql.server
+sed -i 46i\mysql_mdir=${mysql_basedir} ${mysql.service}
+sed -i 45,50s#basedir=#basedir=/usr/local/mysql# ${mysql.service}
+sed -i 45,50s#datadir=#datadir=\${mysql_mdir}/data# ${mysql.service}
+sed -i 61,65s#mysqld_pid_file_path=#mysqld_pid_file_path=\${mysql_mdir}/data/mysql.pid# ${mysql.service}
+sed -i 265,270s#datadir=\"\$datadir\"#defaults-file="\${mysql_mdir}/etc/my.cnf"# ${mysql.service}
 
-sed -i 46i\mysql_mdir=${mysql_basedir} 								${mysql_basedir}/mysql.server
-sed -i 45,50s#basedir=#basedir=/usr/local/mysql# 						${mysql_basedir}/mysql.server
-sed -i 45,50s#datadir=#datadir=\${mysql_mdir}/data#                                             ${mysql_basedir}/mysql.server
-sed -i 61,65s#mysqld_pid_file_path=#mysqld_pid_file_path=\${mysql_mdir}/data/mysql.pid# 	${mysql_basedir}/mysql.server
-sed -i 265,270s#datadir=\"\$datadir\"#defaults-file="\${mysql_mdir}/etc/my.cnf"# 		${mysql_basedir}/mysql.server
+cp -f ${mysql.service} /etc/rc.d/init.d/
 
 echo
 echo 1 Initialize database
