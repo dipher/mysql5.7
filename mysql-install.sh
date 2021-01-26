@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# download all the nstall file to the current directory
+# download all the install file to the current directory
 
+wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.33-linux-glibc2.12-x86_64.tar
 install_file=mysql-5.7.32-linux-glibc2.12-x86_64.tar.gz
 install_file_dir=`echo ${install_file} | awk -F".tar" '{print $1}'`
 mysql_basedir=/opt/mysql/mysql3306
