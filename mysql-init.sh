@@ -11,7 +11,10 @@ if (ss -ant | grep ":${mysql_port}"); then
    exit 0
 fi
 
-mv ${mysql_basedir} ${mysql_basedir}.$(date +%Y%m%d%H%M%S).bk
+if [ -d "${mysql_basedir}" ]; then
+    mv ${mysql_basedir} ${mysql_basedir}.$(date +%Y%m%d%H%M%S).bk
+fi
+
 mkdir -p ${mysql_basedir}/{etc,data,arch,log,tmp}
 
 # create user mysql
@@ -30,16 +33,16 @@ sed -i s#/opt/mysql/mysql3306#${mysql_basedir}#g ${mysql_basedir}/etc/my.cnf
 sed -i s#3306#${mysql_port}#g ${mysql_basedir}/etc/my.cnf
 sed -i s#0.0.0.0#${mysql_ip}#g ${mysql_basedir}/etc/my.cnf
 
-mysql.service=${mysql_basedir}/mysql${mysql_port}
-cp -f ${base_dir}/support-files/mysql.server ${mysql.service}
+mysql_service=${mysql_basedir}/mysql${mysql_port}
+cp -f ${base_dir}/support-files/mysql.server ${mysql_service}
 
-sed -i 46i\mysql_mdir=${mysql_basedir} ${mysql.service}
-sed -i 45,50s#basedir=#basedir=/usr/local/mysql# ${mysql.service}
-sed -i 45,50s#datadir=#datadir=\${mysql_mdir}/data# ${mysql.service}
-sed -i 61,65s#mysqld_pid_file_path=#mysqld_pid_file_path=\${mysql_mdir}/data/mysql.pid# ${mysql.service}
-sed -i 265,270s#datadir=\"\$datadir\"#defaults-file="\${mysql_mdir}/etc/my.cnf"# ${mysql.service}
+sed -i 46i\mysql_mdir=${mysql_basedir} ${mysql_service}
+sed -i 45,50s#basedir=#basedir=/usr/local/mysql# ${mysql_service}
+sed -i 45,50s#datadir=#datadir=\${mysql_mdir}/data# ${mysql_service}
+sed -i 61,65s#mysqld_pid_file_path=#mysqld_pid_file_path=\${mysql_mdir}/data/mysql.pid# ${mysql_service}
+sed -i 265,270s#datadir=\"\$datadir\"#defaults-file="\${mysql_mdir}/etc/my.cnf"# ${mysql_service}
 
-cp -f ${mysql.service} /etc/rc.d/init.d/
+cp -f ${mysql_service} /etc/rc.d/init.d/
 
 echo
 echo 1 Initialize database
