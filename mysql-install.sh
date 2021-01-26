@@ -61,3 +61,4 @@ sed -i "s#/opt/mysql/mysql3306#${mysql_basedir}#g" ${mysql_basedir}/etc/my.cnf
 echo "Please read /usr/local/mysql/mysql-init.sh"
 
 
+ 

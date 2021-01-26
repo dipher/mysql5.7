@@ -23,3 +23,4 @@ sh mysql-init.sh
 4 start as service    
 
 systemctl start mysql${port}    
+ 
