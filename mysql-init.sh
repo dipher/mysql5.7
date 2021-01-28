@@ -69,7 +69,7 @@ echo "
  /usr/local/mysql/bin/mysql -S ${mysql_basedir}/data/mysql.sock -p\"`cat ${mysql_basedir}/log/mysql.log | grep 'temporary password' | awk '{print $NF}'`\"
 
  2 modify the pwd
- set password for 'root'@'%' = password('newpwd')
+ set password for 'root'@'localhost' = password('newpwd')
  
  3 auto start
  chkconfig mysql${mysql_port} on
