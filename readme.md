@@ -1,5 +1,5 @@
-Install mysql-5.7.32-linux-glibc2.12-x86_64.tar.gz   
-  安装二进制版本mysql-5.7.32   
+Install mysql-5.7.33-linux-glibc2.12-x86_64.tar.gz   
+  安装二进制版本mysql-5.7.33   
 
 1 Download the install files   
   下载安装文件   
