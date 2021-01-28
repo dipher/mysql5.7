@@ -66,7 +66,7 @@ echo
 echo 4 Login mysql server and modify the password of root
 echo "
  1 login mysql
- /usr/local/mysql/bin/mysql -S ${mysql_basedir}/data/mysql.sock -p
+ /usr/local/mysql/bin/mysql -S ${mysql_basedir}/data/mysql.sock -p`cat ${mysql_basedir}/log/mysql.log | grep 'temporary password' | awk '{print $NF}'`
 
  2 modify the pwd
  set password for 'root'@'%' = password('newpwd')
