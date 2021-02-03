@@ -2,7 +2,7 @@
 
 base_dir=/usr/local/mysql
 
-mysql_port=3306
+mysql_port=13300
 mysql_ip=0.0.0.0
 mysql_basedir=/opt/mysql/mysql${mysql_port}
 
