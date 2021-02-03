@@ -1,10 +1,34 @@
 #!/bin/bash
 
-base_dir=/usr/local/mysql
+if (test -z $1 ) || (test -z $2 );then
+   echo "Error!"
+   echo "Usage: sh $0 mysql_port mysql_data_dir !"
+   echo "Such as: sh $0 3306 /opt/mysql/mysql3306 "
+   exit 1
+fi
 
-mysql_port=3306
+if (test $1 -ge 1024) && (test $1 -le 65500) 2>/dev/null;then
+   echo MySQL_Server_Port is set as $1
+else
+   echo "MySQL_server port setting was wrong"
+   echo exit
+   exit 1
+fi
+
+mysqldata_dir=$2
+
+if (test ${mysqldata_dir:0:1} = "/") ;then
+   echo MySQL_Server_Data_Directory is set as $2
+else
+   echo "MySQL_server directory setting was wrong"
+   echo exit
+   exit 1
+fi
+
+base_dir=/usr/local/mysql
+mysql_port=$1
 mysql_ip=0.0.0.0
-mysql_basedir=/opt/mysql/mysql${mysql_port}
+mysql_basedir=$2
 
 if (ss -ant | grep ":${mysql_port}"); then 
    echo the port:${mysql_port} already in used, exit. 
@@ -27,7 +51,7 @@ chmod -R 750 /usr/local/mysql
 chown -R mysql:mysql ${mysql_basedir}
 chmod -R 750 ${mysql_basedir}
 
-cp -rf my.cnf  ${mysql_basedir}/etc/
+cp -rf my-ha.cnf  ${mysql_basedir}/etc/my.cnf
 
 sed -i s#/opt/mysql/mysql3306#${mysql_basedir}#g ${mysql_basedir}/etc/my.cnf
 sed -i s#3306#${mysql_port}#g ${mysql_basedir}/etc/my.cnf
@@ -66,10 +90,10 @@ echo
 echo 4 Login mysql server and modify the password of root
 echo "
  1 login mysql
- /usr/local/mysql/bin/mysql -S ${mysql_basedir}/data/mysql.sock -p\"`cat ${mysql_basedir}/log/mysql.log | grep 'temporary password' | awk '{print $NF}'`\"
+ /usr/local/mysql/bin/mysql -S ${mysql_basedir}/data/mysql.sock -p\'`cat ${mysql_basedir}/log/mysql.log | grep 'temporary password' | awk '{print $NF}'`\'
 
  2 modify the pwd
- set password for 'root'@'localhost' = password('newpwd')
+ set password for 'root'@'localhost' = password('newpwd');
  
  3 auto start
  chkconfig mysql${mysql_port} on
