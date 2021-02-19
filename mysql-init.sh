@@ -41,6 +41,7 @@ if [ -d "${mysql_basedir}" ]; then
 fi
 
 mkdir -p ${mysql_basedir}/{etc,data,arch,log,tmp}
+mkdir -p ${mysql_basedir}/data/{arch,log,tmp}
 
 # create user mysql
 useradd -r -s /bin/false mysql
