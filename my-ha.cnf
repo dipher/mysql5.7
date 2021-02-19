@@ -22,6 +22,8 @@ sync_binlog			= 1
 binlog_format			= row
 innodb_buffer_pool_size		= 4G 
 log-bin				= /opt/mysql/mysql3306/arch/mysql-bin
+expire_logs_days 		= 10
+max_binlog_size 		= 100M
 
 log-slave-updates=1
 relay-log  			= /opt/mysql/mysql3306/arch/relay-log
@@ -37,7 +39,7 @@ relay_log_info_repository	= TABLE
 relay_log_recovery 		= ON
 
 #other logs
-general_log 			= 1
+general_log 			= 0
 general_log_file  		= /opt/mysql/mysql3306/log/general_log.err
 slow_query_log			= 1
 slow_query_log_file		= /opt/mysql/mysql3306/log/slow_log.err
@@ -50,20 +52,3 @@ pid-file			= /opt/mysql/mysql3306/data/mysql.pid
 [mysql]
 default-character-set 		= utf8mb4
 
-[mysql_upgrade]
-
-[mysqladmin]
-
-[mysqlbinlog]
-
-[mysqlcheck]
-
-[mysqldump]
-
-[mysqlimport]
-
-[mysqlshow]
-
-[mysqlslap]
-
- 
