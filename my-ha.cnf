@@ -3,7 +3,7 @@ port 				= 3306
 bind-address			= 0.0.0.0
 basedir				= /usr/local/mysql
 datadir				= /opt/mysql/mysql3306/data
-socket				= /opt/mysql/mysql3306/data/mysql.sock
+socket				= mysql.sock
 
 character-set-client-handshake 	= FALSE
 character-set-server 		= utf8mb4
@@ -21,14 +21,14 @@ max_connections			= 200
 sync_binlog			= 1
 binlog_format			= row
 innodb_buffer_pool_size		= 4G 
-log-bin				= /opt/mysql/mysql3306/arch/mysql-bin
+log-bin				= ../arch/mysql-bin
 expire_logs_days 		= 10
 max_binlog_size 		= 100M
 
 log-slave-updates=1
-relay-log  			= /opt/mysql/mysql3306/arch/relay-log
-relay-log-index 		= /opt/mysql/mysql3306/arch/relay-log.index
-relay_log_info_file		= /opt/mysql/mysql3306/arch/relay-log.info
+relay-log  			= ../arch/relay-log
+relay-log-index 		= ../arch/relay-log.index
+relay_log_info_file		= ../arch/relay-log.info
 relay_log_purge 		= 0
 
 # slave
@@ -40,14 +40,14 @@ relay_log_recovery 		= ON
 
 #other logs
 general_log 			= 0
-general_log_file  		= /opt/mysql/mysql3306/log/general_log.err
+general_log_file  		= ../log/general_log.err
 slow_query_log			= 1
-slow_query_log_file		= /opt/mysql/mysql3306/log/slow_log.err
+slow_query_log_file		= ../log/slow_log.err
 
 
 [mysqld_safe]
-log-error			= /opt/mysql/mysql3306/log/mysql.log
-pid-file			= /opt/mysql/mysql3306/data/mysql.pid
+log-error			= ../log/mysql.log
+pid-file			= mysql.pid
 
 [mysql]
 default-character-set 		= utf8mb4
