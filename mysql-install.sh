@@ -2,16 +2,30 @@
 
 # download all the install file to the current directory
 
-#wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.33-linux-glibc2.12-x86_64.tar
-install_file=mysql-5.7.33-linux-glibc2.12-x86_64.tar.gz
+dl_dir=/data/install-file-mysql
+mkdir -p ${dl_dir}
+
+install_file_tar=mysql-5.7.33-linux-glibc2.12-x86_64.tar
+install_file=${install_file_tar}.gz
 install_file_dir=`echo ${install_file} | awk -F".tar" '{print $1}'`
 mysql_basedir=/opt/mysql/mysql3306
 
+if ( test -e "${dl_dir}/${install_file_tar}" ); then
+    echo "The File exists,${dl_dir}/${install_file_tar}"
+else
+    wget https://dev.mysql.com/get/Downloads/MySQL-5.7/${install_file_tar} -O ${dl_dir}/${install_file_tar}
+fi
+
+if ( test -e "${dl_dir}/${install_file}" ); then
+    echo "The File exists,${dl_dir}/${install_file}"
+else
+    tar xvf ${dl_dir}/${install_file_tar} -C ${dl_dir}/
+fi
+
 # ready for some file
  
-
 if [ ! -d "/usr/local/${install_file_dir}" ]; then
-    tar -zxf /tmp/${install_file} -C /usr/local/
+    tar -zxf ${dl_dir}/${install_file} -C /usr/local/
 fi
 
 if [ ! -d "/usr/local/mysql" ]; then
