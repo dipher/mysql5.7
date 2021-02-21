@@ -37,17 +37,16 @@ if (ss -ant | grep ":${mysql_port}"); then
 fi
 
 if [ -d "${mysql_basedir}" ]; then
-    echo the port:${mysql_basedir} already exist, exit. 
+    echo The Directory: ${mysql_basedir} already exist, exit. 
     exit 0
 fi
 
-mkdir -p ${mysql_basedir}/{etc,data}
-mkdir -p ${mysql_basedir}/data/{arch,log,tmp}
+mkdir -p ${mysql_basedir}/{etc,data,arch,log,tmp}
 
 # create user mysql
 useradd -r -s /bin/false mysql
 
-> ${mysql_basedir}/data/log/mysql.log
+> ${mysql_basedir}/log/mysql.log
 
 chown -R mysql:mysql /usr/local/mysql
 chmod -R 750 /usr/local/mysql
@@ -75,8 +74,13 @@ cp -f ${mysql_service} ${mysql_basedir}/mysql.server
 echo
 echo 1 Initialize database
 echo database initializing ...
-${base_dir}/bin/mysqld --defaults-file=${mysql_basedir}/etc/my.cnf --log-error=${mysql_basedir}/log/mysql.log --user=mysql --initialize 
-${base_dir}/bin/mysql_ssl_rsa_setup --datadir=${mysql_basedir}/data/
+${base_dir}/bin/mysqld \
+  --defaults-file=${mysql_basedir}/etc/my.cnf \
+  --log-error=${mysql_basedir}/log/mysql.log \
+  --user=mysql \
+  --initialize 
+${base_dir}/bin/mysql_ssl_rsa_setup \
+  --datadir=${mysql_basedir}/data/
 echo
 
 echo 2 Look for the default password for root
