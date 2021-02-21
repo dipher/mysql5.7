@@ -102,4 +102,3 @@ echo "
  service mysql${mysql_port} start
 END.
 "
- 
