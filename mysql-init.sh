@@ -3,7 +3,7 @@
 if (test -z $1 ) || (test -z $2 );then
    echo "Error!"
    echo "Usage: sh $0 mysql_port mysql_data_dir !"
-   echo "Such as: sh $0 3306 /opt/mysql/mysql3306 "
+   echo "Such as: sh $0 3306 /data/mysql/3306 "
    exit 1
 fi
 
@@ -37,16 +37,17 @@ if (ss -ant | grep ":${mysql_port}"); then
 fi
 
 if [ -d "${mysql_basedir}" ]; then
-    mv ${mysql_basedir} ${mysql_basedir}.$(date +%Y%m%d%H%M%S).bk
+    echo the port:${mysql_basedir} already exist, exit. 
+    exit 0
 fi
 
-mkdir -p ${mysql_basedir}/{etc,data,arch,log,tmp}
+mkdir -p ${mysql_basedir}/{etc,data}
 mkdir -p ${mysql_basedir}/data/{arch,log,tmp}
 
 # create user mysql
 useradd -r -s /bin/false mysql
 
-> ${mysql_basedir}/log/mysql.log
+> ${mysql_basedir}/data/log/mysql.log
 
 chown -R mysql:mysql /usr/local/mysql
 chmod -R 750 /usr/local/mysql
@@ -55,7 +56,7 @@ chmod -R 750 ${mysql_basedir}
 
 cp -rf my.cnf  ${mysql_basedir}/etc/
 
-sed -i s#/opt/mysql/mysql3306#${mysql_basedir}#g ${mysql_basedir}/etc/my.cnf
+sed -i s#/data/mysql/3306#${mysql_basedir}#g ${mysql_basedir}/etc/my.cnf
 sed -i s#3306#${mysql_port}#g ${mysql_basedir}/etc/my.cnf
 sed -i s#0.0.0.0#${mysql_ip}#g ${mysql_basedir}/etc/my.cnf
 

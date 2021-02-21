@@ -8,7 +8,6 @@ mkdir -p ${dl_dir}
 install_file_tar=mysql-5.7.33-linux-glibc2.12-x86_64.tar
 install_file=${install_file_tar}.gz
 install_file_dir=`echo ${install_file} | awk -F".tar" '{print $1}'`
-mysql_basedir=/data/mysql/mysql3306
 
 if ( test -e "${dl_dir}/${install_file_tar}" ); then
     echo "The File exists,${dl_dir}/${install_file_tar}"
@@ -50,27 +49,14 @@ if [ -d "${mysql_basedir}" ]; then
     mv ${mysql_basedir} ${mysql_basedir}.$(date +%Y%m%d%H%M%S).bk
 fi
 
-mkdir -p ${mysql_basedir}/{etc,data}
-mkdir -p ${mysql_basedir}/data/{arch,log,tmp}
-cp -f my.cnf ${mysql_basedir}/etc/
-
 # create user mysql
 useradd -r -s /bin/false mysql
 
-#
-> ${mysql_basedir}/data/log/mysql.log
-
 chown -R mysql:mysql /usr/local/mysql
 chmod -R 755 /usr/local/mysql
-chown -R mysql:mysql ${mysql_basedir}
-chmod -R 750 ${mysql_basedir}
 
 #
 yum -y install libaio
-
-# ready for my.cnf
-
-sed -i "s#/data/mysql/mysql3306#${mysql_basedir}#g" ${mysql_basedir}/etc/my.cnf
 
 
 
