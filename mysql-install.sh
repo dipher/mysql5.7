@@ -2,13 +2,13 @@
 
 # download all the install file to the current directory
 
-dl_dir=/data/install-file-mysql
+dl_dir=/opt/install-file-mysql
 mkdir -p ${dl_dir}
 
 install_file_tar=mysql-5.7.33-linux-glibc2.12-x86_64.tar
 install_file=${install_file_tar}.gz
 install_file_dir=`echo ${install_file} | awk -F".tar" '{print $1}'`
-mysql_basedir=/opt/mysql/mysql3306
+mysql_basedir=/data/mysql/mysql3306
 
 if ( test -e "${dl_dir}/${install_file_tar}" ); then
     echo "The File exists,${dl_dir}/${install_file_tar}"
@@ -70,7 +70,7 @@ yum -y install libaio
 
 # ready for my.cnf
 
-sed -i "s#/opt/mysql/mysql3306#${mysql_basedir}#g" ${mysql_basedir}/etc/my.cnf
+sed -i "s#/data/mysql/mysql3306#${mysql_basedir}#g" ${mysql_basedir}/etc/my.cnf
 
 
 
