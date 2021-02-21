@@ -6,7 +6,6 @@ Install mysql-5.7.33-linux-glibc2.12-x86_64.tar.gz
 cd /opt/   
 git clone https://git@github.com/dipher/mysql5.7.git    
 cd mysql5.7   
-sh mysql-download-files.sh   
 
 2 Install...   
   开始安装   

@@ -50,14 +50,15 @@ if [ -d "${mysql_basedir}" ]; then
     mv ${mysql_basedir} ${mysql_basedir}.$(date +%Y%m%d%H%M%S).bk
 fi
 
-mkdir -p ${mysql_basedir}/{etc,data,arch,log,tmp}
+mkdir -p ${mysql_basedir}/{etc,data}
+mkdir -p ${mysql_basedir}/data/{arch,log,tmp}
 cp -f my.cnf ${mysql_basedir}/etc/
 
 # create user mysql
 useradd -r -s /bin/false mysql
 
 #
-> ${mysql_basedir}/log/mysql.log
+> ${mysql_basedir}/data/log/mysql.log
 
 chown -R mysql:mysql /usr/local/mysql
 chmod -R 755 /usr/local/mysql
