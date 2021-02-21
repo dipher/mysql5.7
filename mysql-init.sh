@@ -31,7 +31,7 @@ mysql_port=$1
 mysql_ip=0.0.0.0
 mysql_basedir=$2
 
-if (ss -ant | grep ":${mysql_port}"); then 
+if (ss -antl | grep ":${mysql_port}"); then 
    echo the port:${mysql_port} already in used, exit. 
    exit 0
 fi
